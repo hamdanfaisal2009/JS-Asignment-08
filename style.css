@@ -1,0 +1,390 @@
+/* @import url('https://fonts.googleapis.com/css2?family=Saira+Stencil+One&display=swap');
+
+
+body {
+    background: #352f5b;
+    font-family: 'Saira Stencil One', cursive;
+}
+
+.container {
+    max-width: 400px;
+}
+
+input[type=text],
+input[type=text]:focus {
+    color: #fff;
+    border: none;
+    background: rgba(0, 0, 0, 0.2);
+    max-width: 400px;
+}
+
+.todos li {
+    background: #423a6f;
+    color: white;
+}
+
+.delete {
+    cursor: pointer;
+}
+
+.filtered {
+    display: none !important;
+}
+
+.btn-1 {
+    color: white;
+    transition: all 0.3s ease;
+}
+
+.btn-1:hover {
+    color: #352f5b;
+    background: rgb(218, 218, 218);
+    font-size: medium;
+    transform: scale(1.05);
+}        */
+
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    font-family: Arial, sans-serif;
+    background:
+        radial-gradient(circle at top left, #273449, transparent 35%),
+        radial-gradient(circle at bottom right, #172131, transparent 35%),
+        #0b111b;
+    color: #fff;
+    padding: 60px 20px;
+}
+
+.todo-container {
+    width: min(900px, 100%);
+    margin: auto;
+}
+
+.todo-header {
+    text-align: center;
+    margin-bottom: 45px;
+}
+
+.todo-header p {
+    font-size: 11px;
+    letter-spacing: 4px;
+    color: #8fa5c2;
+    margin-bottom: 15px;
+}
+
+.todo-header h1 {
+    font-size: clamp(42px, 7vw, 72px);
+    font-weight: 700;
+    letter-spacing: -3px;
+    margin-bottom: 12px;
+}
+
+.todo-header span {
+    color: #8794a7;
+    font-size: 15px;
+}
+
+.add-section {
+    display: flex;
+    gap: 12px;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 18px;
+    backdrop-filter: blur(20px);
+    margin-bottom: 35px;
+}
+
+.add-section input {
+    flex: 1;
+    border: none;
+    outline: none;
+    background: transparent;
+    color: #fff;
+    padding: 0 18px;
+    font-size: 16px;
+}
+
+.add-section input::placeholder {
+    color: #687589;
+    transition: all 1s ease-in-out;
+}
+
+.add-section input:hover {
+    transition: all 0.2s ease-in-out;
+}
+
+.add-section input:hover {
+    background-color: rgba(119, 119, 119, 0.123);
+    border-radius: 20px;
+}
+
+button {
+    border: none;
+    cursor: pointer;
+}
+
+#addBtn {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 15px 22px;
+    border-radius: 12px;
+    background: #fff;
+    color: #101722;
+    font-weight: 600;
+    transition: 0.3s ease;
+}
+
+#addBtn:hover {
+    transform: scale(1.05);
+    background: #dce6f3;
+}
+
+svg {
+    width: 17px;
+    height: 17px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+}
+
+.section-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.section-heading h2 {
+    font-size: 22px;
+}
+
+.section-heading span {
+    color: #748197;
+    font-size: 13px;
+}
+
+#taskList {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.task-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.055);
+    border: 1px solid rgba(255, 255, 255, 0.09);
+    border-radius: 16px;
+    backdrop-filter: blur(15px);
+    transition: 0.3s ease;
+}
+
+.task-item:hover {
+    transform: translateY(-2px);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.task-text {
+    flex: 1;
+    font-size: 16px;
+    transition: 0.3s ease;
+}
+
+.task-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.task-actions button {
+    padding: 9px 13px;
+    border-radius: 9px;
+    font-size: 12px;
+    transition: 0.3s ease;
+}
+
+.view-btn {
+    background: #253247;
+    color: #dce6f3;
+}
+
+.complete-btn {
+    background: #1f3b32;
+    color: #9ce4c5;
+}
+
+.delete-btn {
+    background: #3c252b;
+    color: #f0a9b5;
+}
+
+.task-actions button:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.2);
+}
+
+.completed .task-text {
+    text-decoration: line-through;
+    opacity: 0.45;
+}
+
+.modal {
+    position: fixed;
+    inset: 0;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: rgba(3, 7, 13, 0.78);
+    backdrop-filter: blur(12px);
+    z-index: 100;
+}
+
+.modal.active {
+    display: flex;
+}
+
+.modal-box {
+    width: min(750px, 100%);
+    min-height: 330px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 24px;
+    background: #111a27;
+    box-shadow: 0 30px 100px rgba(0, 0, 0, 0.5);
+    animation: modalShow 0.3s ease;
+}
+
+@keyframes modalShow {
+    from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.97);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.modal-left,
+.modal-right {
+    padding: 55px 40px;
+}
+
+.modal-left {
+    background: linear-gradient(145deg, #1b293d, #111a27);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.modal-left p,
+.modal-right p {
+    font-size: 10px;
+    letter-spacing: 3px;
+    color: #72839a;
+    margin-bottom: 15px;
+}
+
+.modal-left h2 {
+    font-size: 32px;
+    line-height: 1.15;
+}
+
+.modal-right {
+    border-left: 1px solid rgba(255, 255, 255, 0.08);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.modal-right h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.modal-right span {
+    color: #8997aa;
+    line-height: 1.6;
+    font-size: 14px;
+}
+
+.close-btn {
+    position: absolute;
+    top: 18px;
+    right: 18px;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.08);
+    color: #fff;
+    display: grid;
+    place-items: center;
+    z-index: 2;
+}
+
+.close-btn:hover {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+@media (max-width: 600px) {
+    body {
+        padding: 35px 15px;
+    }
+
+    .add-section {
+        flex-direction: column;
+        padding: 12px;
+    }
+
+    .add-section input {
+        min-height: 50px;
+    }
+
+    #addBtn {
+        justify-content: center;
+    }
+
+    .task-item {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .task-actions {
+        width: 100%;
+    }
+
+    .task-actions button {
+        flex: 1;
+    }
+
+    .modal-box {
+        grid-template-columns: 1fr;
+    }
+
+    .modal-left,
+    .modal-right {
+        padding: 35px 25px;
+    }
+
+    .modal-right {
+        border-left: none;
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+    }
+}

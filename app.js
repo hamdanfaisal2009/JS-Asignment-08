@@ -1,69 +1,100 @@
-const addForm = document.querySelector(".add");
-const searchInput = document.querySelector(".search input");
-const list = document.querySelector(".todos");
-const addButton = document.querySelector(".btn");
+let taskInput = document.getElementById("taskInput");
+let addBtn = document.getElementById("addBtn");
+let taskList = document.getElementById("taskList");
+let taskCount = document.getElementById("taskCount");
 
-let Index = null;
+let taskModal = document.getElementById("taskModal");
+let closeModal = document.getElementById("closeModal");
 
-addForm.addEventListener("submit", function (e) {
-  e.preventDefault();
-  if (Index === null) {
-    list.innerHTML += `
-     <li class="list-group-item d-flex justify-content-between align-items-center">
-        <span>${addForm.add.value}</span>
-        <div>
-          <i class="fas fa-edit edit"></i>
-          <i class="far fa-trash-alt delete"></i>
+function addTask() {
+  if (taskInput.value.trim() === "") {
+    return;
+  }
+
+  let li = document.createElement("li");
+
+  li.classList.add("task-item");
+
+  li.innerHTML = `
+        <span class="task-text">${taskInput.value}</span>
+
+        <div class="task-actions">
+            <button class="view-btn">View</button>
+            <button class="complete-btn">Complete</button>
+            <button class="delete-btn">Delete</button>
         </div>
-      </li>
-  `;
-  } else {
-    list.children[Index].querySelector("span").textContent =
-      addForm.add.value;
-    Index = null;
-    addButton.textContent = "Add Todo";
-  }
+    `;
 
-  addForm.reset();
-});
+  taskList.appendChild(li);
 
-list.addEventListener("click", function (e) {
-  if (e.target.classList.contains("delete")) {
-    e.target.parentElement.parentElement.remove();
-    alert(" Are you sure you want to delete this todo?");
-  }
+  viewTask(li);
+  markTaskAsCompleted(li);
+  deleteTask(li);
 
-  if (e.target.classList.contains("edit")) {
-    const items = list.children;
-    const targetItem = e.target.parentElement.parentElement;
-    addButton.textContent = "Update Todo";
+  taskInput.value = "";
 
-    for (let i = 0; i < items.length; i++) {
-      if (items[i] === targetItem) {
-        console.log(i);
-        Index = i;
-      }
-    }
+  updateTaskCount();
+}
 
-    addForm.add.value =
-      e.target.parentElement.previousElementSibling.textContent;
-  }
-});
+function viewTask(task) {
+  let viewBtn = task.querySelector(".view-btn");
 
+  viewBtn.addEventListener("click", function () {
+    let taskText = task.querySelector(".task-text").textContent;
 
-const filter = searchInput.value.toUpperCase();
-const items = list.getElementsByTagName("li");
+    document.getElementById("modalTask").textContent = taskText;
 
-  for (let i = 0; i < items.length; i++) {
-    const span = items[i].getElementsByTagName("span")[0];
-    const textValue = span.textContent || span.innerText;
+    document.getElementById("modalDetails").textContent =
+      "This task is currently active and has been added to your todo list.";
 
-    if (textValue.toUpperCase().indexOf(filter) > -1) {
-      items[i].style.display = "";
+    taskModal.classList.add("active");
+  });
+}
+
+function markTaskAsCompleted(task) {
+  let completeBtn = task.querySelector(".complete-btn");
+
+  completeBtn.addEventListener("click", function () {
+    task.classList.toggle("completed");
+
+    if (task.classList.contains("completed")) {
+      completeBtn.textContent = "Completed";
     } else {
-      items[i].style.display = "none";
+      completeBtn.textContent = "Complete";
     }
-  }
+  });
+}
 
-searchInput.addEventListener("keyup", myFunction);
-searchInput.addEventListener("input", myFunction);
+function deleteTask(task) {
+  let deleteBtn = task.querySelector(".delete-btn");
+
+  deleteBtn.addEventListener("click", function () {
+    task.remove();
+
+    updateTaskCount();
+  });
+}
+
+function updateTaskCount() {
+  let totalTasks = taskList.children.length;
+
+  taskCount.textContent = totalTasks + " Tasks";
+}
+
+addBtn.addEventListener("click", addTask);
+
+taskInput.addEventListener("keydown", function (event) {
+  if (event.key === "Enter") {
+    addTask();
+  }
+});
+
+closeModal.addEventListener("click", function () {
+  taskModal.classList.remove("active");
+});
+
+taskModal.addEventListener("click", function (event) {
+  if (event.target === taskModal) {
+    taskModal.classList.remove("active");
+  }
+});
