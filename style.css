@@ -178,6 +178,7 @@ svg {
     display: flex;
     flex-direction: column;
     gap: 12px;
+    margin-bottom: 15px;
 }
 
 .task-item {
@@ -193,8 +194,8 @@ svg {
 }
 
 .task-item:hover {
-    transform: translateY(-2px);
-    border-color: rgba(255, 255, 255, 0.2);
+    transform: scale(1.03);
+    border-color: rgba(255, 255, 255, 0.432);
 }
 
 .task-text {

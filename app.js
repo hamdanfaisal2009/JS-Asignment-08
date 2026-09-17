@@ -36,6 +36,11 @@ function addTask() {
   updateTaskCount();
 }
 
+let li = document.querySelector("li");
+viewTask(li);
+markTaskAsCompleted(li);
+deleteTask(li);
+
 function viewTask(task) {
   let viewBtn = task.querySelector(".view-btn");
 
