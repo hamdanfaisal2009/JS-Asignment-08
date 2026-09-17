@@ -344,6 +344,9 @@ svg {
     background: rgba(255, 255, 255, 0.15);
 }
 
+
+
+
 @media (max-width: 600px) {
     body {
         padding: 35px 15px;
@@ -387,5 +390,10 @@ svg {
     .modal-right {
         border-left: none;
         border-top: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    #task1 {
+        width: 44.9%;
+        margin-left: 553px;
     }
 }
