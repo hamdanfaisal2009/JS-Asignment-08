@@ -2,7 +2,11 @@ let taskInput = document.getElementById("taskInput");
 let addBtn = document.getElementById("addBtn");
 let taskList = document.getElementById("taskList");
 let taskCount = document.getElementById("taskCount");
+
+let searchBtn = document.getElementById("searchBtn");
+let searchModal = document.getElementById("searchModal");
 let searchInput = document.getElementById("searchInput");
+let searchCloseBtn = document.getElementById("searchCloseBtn");
 
 let taskModal = document.getElementById("taskModal");
 let closeModal = document.getElementById("closeModal");
@@ -145,12 +149,40 @@ function searchTasks() {
 
 addBtn.addEventListener("click", addTask);
 
-searchInput.addEventListener("input", searchTasks);
-
 taskInput.addEventListener("keydown", function (event) {
 
     if (event.key === "Enter") {
         addTask();
+    }
+});
+
+searchBtn.addEventListener("click", function () {
+
+    searchModal.classList.add("active");
+
+    searchInput.focus();
+});
+
+searchInput.addEventListener("input", searchTasks);
+
+searchCloseBtn.addEventListener("click", function () {
+
+    searchModal.classList.remove("active");
+
+    searchInput.value = "";
+
+    searchTasks();
+});
+
+searchModal.addEventListener("click", function (event) {
+
+    if (event.target === searchModal) {
+
+        searchModal.classList.remove("active");
+
+        searchInput.value = "";
+
+        searchTasks();
     }
 });
 
