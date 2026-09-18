@@ -27,15 +27,12 @@
                 Add Task
             </button>
 
-        </section>
-
-        <section class="search-section">
-
-            <input
-                type="text"
-                id="searchInput"
-                placeholder="Search your tasks..."
-            >
+            <button id="searchBtn" class="search-btn">
+                <svg viewBox="0 0 24 24">
+                    <circle cx="11" cy="11" r="7"></circle>
+                    <path d="M20 20l-4-4"></path>
+                </svg>
+            </button>
 
         </section>
 
@@ -76,6 +73,31 @@
                     This task is currently active.
                 </span>
             </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="search-modal" id="searchModal">
+
+        <div class="search-modal-box">
+
+            <button class="search-close-btn" id="searchCloseBtn">
+                <svg viewBox="0 0 24 24">
+                    <path d="M6 6l12 12M18 6L6 18"/>
+                </svg>
+            </button>
+
+            <p>SEARCH TASKS</p>
+
+            <h2>Find Your Task</h2>
+
+            <input
+                type="text"
+                id="searchInput"
+                placeholder="Search your task..."
+            >
 
         </div>
 
