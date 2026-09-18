@@ -83,7 +83,7 @@ button {
     background: #fff;
     color: #101722;
     font-weight: 600;
-    transition: 0.3s ease;
+    transition:all 0.3s ease;
 }
 
 #addBtn:hover {
@@ -108,7 +108,7 @@ svg {
     border-radius: 12px;
     background: #253247;
     color: #dce6f3;
-    transition: 0.3s ease;
+    transition:all 0.3s ease;
 }
 
 .search-btn:hover {
@@ -153,7 +153,7 @@ svg {
     border: 1px solid rgba(255, 255, 255, 0.09);
     border-radius: 16px;
     backdrop-filter: blur(15px);
-    transition: 0.3s ease;
+    transition: all 0.3s ease;
 }
 
 .task-item:hover {
@@ -175,7 +175,7 @@ svg {
     padding: 9px 13px;
     border-radius: 9px;
     font-size: 12px;
-    transition: 0.3s ease;
+    transition:all 0.3s ease;
 }
 
 .view-btn {
