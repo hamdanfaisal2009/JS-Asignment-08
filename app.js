@@ -7,6 +7,7 @@ let searchBtn = document.getElementById("searchBtn");
 let searchModal = document.getElementById("searchModal");
 let searchInput = document.getElementById("searchInput");
 let searchCloseBtn = document.getElementById("searchCloseBtn");
+let searchResults = document.getElementById("searchResults");
 
 let taskModal = document.getElementById("taskModal");
 let closeModal = document.getElementById("closeModal");
@@ -31,8 +32,6 @@ function addTask() {
         addBtn.querySelector("span").textContent = "Add Task";
 
         taskInput.value = "";
-
-        searchTasks();
 
         return;
     }
@@ -62,8 +61,6 @@ function addTask() {
     taskInput.value = "";
 
     updateTaskCount();
-
-    searchTasks();
 }
 
 
@@ -139,8 +136,6 @@ function deleteTask(task) {
         task.remove();
 
         updateTaskCount();
-
-        searchTasks();
     });
 }
 
@@ -157,20 +152,45 @@ function searchTasks() {
 
     let searchValue = searchInput.value.toLowerCase().trim();
 
+    searchResults.innerHTML = "";
+
+    if (searchValue === "") {
+        return;
+    }
+
     let tasks = taskList.children;
+
+    let found = false;
 
     for (let i = 0; i < tasks.length; i++) {
 
         let taskText = tasks[i]
             .querySelector(".task-text")
-            .textContent
-            .toLowerCase();
+            .textContent;
 
-        if (taskText.includes(searchValue)) {
-            tasks[i].style.display = "flex";
-        } else {
-            tasks[i].style.display = "none";
+        if (taskText.toLowerCase().includes(searchValue)) {
+
+            let result = document.createElement("div");
+
+            result.classList.add("search-result-item");
+
+            result.textContent = taskText;
+
+            searchResults.appendChild(result);
+
+            found = true;
         }
+    }
+
+    if (!found) {
+
+        let noResult = document.createElement("div");
+
+        noResult.classList.add("search-no-result");
+
+        noResult.textContent = "No task found.";
+
+        searchResults.appendChild(noResult);
     }
 }
 
@@ -192,7 +212,7 @@ searchBtn.addEventListener("click", function () {
 
     searchInput.value = "";
 
-    searchTasks();
+    searchResults.innerHTML = "";
 
     searchInput.focus();
 });
@@ -210,7 +230,7 @@ function closeSearch() {
 
     searchInput.value = "";
 
-    searchTasks();
+    searchResults.innerHTML = "";
 }
 
 
