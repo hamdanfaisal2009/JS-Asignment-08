@@ -87,7 +87,7 @@ button {
 }
 
 #addBtn:hover {
-    transform: translateY(-2px);
+    transform: scale(1.05);
     background: #dce6f3;
 }
 
@@ -112,7 +112,7 @@ svg {
 }
 
 .search-btn:hover {
-    transform: translateY(-2px);
+    transform: scale(1.05);
     background: #30415a;
 }
 
@@ -157,7 +157,7 @@ svg {
 }
 
 .task-item:hover {
-    transform: translateY(-2px);
+    transform: scale(1.1);
     border-color: rgba(255, 255, 255, 0.2);
 }
 
