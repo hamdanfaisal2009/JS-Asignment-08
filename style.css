@@ -87,7 +87,7 @@ button {
 }
 
 #addBtn:hover {
-    transform: scale(1.05);
+    transform: translateY(-2px);
     background: #dce6f3;
 }
 
@@ -112,7 +112,7 @@ svg {
 }
 
 .search-btn:hover {
-    transform:scale(1.05);
+    transform: translateY(-2px);
     background: #30415a;
 }
 
@@ -157,7 +157,7 @@ svg {
 }
 
 .task-item:hover {
-    transform: scale(1.1);
+    transform: translateY(-2px);
     border-color: rgba(255, 255, 255, 0.2);
 }
 
@@ -207,7 +207,6 @@ svg {
     text-decoration: line-through;
     opacity: 0.45;
 }
-
 
 .modal,
 .search-modal {
@@ -342,6 +341,31 @@ svg {
     color: #687589;
 }
 
+.search-results {
+    margin-top: 20px;
+    max-height: 300px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.search-result-item {
+    padding: 15px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: #fff;
+    font-size: 14px;
+}
+
+.search-no-result {
+    padding: 15px;
+    color: #748197;
+    text-align: center;
+    font-size: 14px;
+}
+
 @keyframes modalShow {
     from {
         opacity: 0;
@@ -410,5 +434,7 @@ svg {
 
     .search-modal-box {
         padding: 35px 25px;
+    }
+}
     }
 }
