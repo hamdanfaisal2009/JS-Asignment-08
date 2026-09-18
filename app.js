@@ -2,22 +2,35 @@ let taskInput = document.getElementById("taskInput");
 let addBtn = document.getElementById("addBtn");
 let taskList = document.getElementById("taskList");
 let taskCount = document.getElementById("taskCount");
+let searchInput = document.getElementById("searchInput");
 
 let taskModal = document.getElementById("taskModal");
 let closeModal = document.getElementById("closeModal");
 
-let searchInput = document.getElementById("searchInput");
+let editTask = null;
 
 function addTask() {
-  if (taskInput.value.trim() === "") {
-    return;
-  }
 
-  let li = document.createElement("li");
+    if (taskInput.value.trim() === "") {
+        return;
+    }
 
-  li.classList.add("task-item");
+    if (editTask !== null) {
 
-  li.innerHTML = `
+        editTask.querySelector(".task-text").textContent = taskInput.value;
+
+        editTask = null;
+        addBtn.textContent = "Add Task";
+        taskInput.value = "";
+
+        return;
+    }
+
+    let li = document.createElement("li");
+
+    li.classList.add("task-item");
+
+    li.innerHTML = `
         <span class="task-text">${taskInput.value}</span>
 
         <div class="task-actions">
@@ -28,167 +41,127 @@ function addTask() {
         </div>
     `;
 
-  taskList.appendChild(li);
+    taskList.appendChild(li);
 
-  viewTask(li);
-  editTask(li);
-  markTaskAsCompleted(li);
-  deleteTask(li);
+    viewTask(li);
+    editTaskFunction(li);
+    markTaskAsCompleted(li);
+    deleteTask(li);
 
-  taskInput.value = "";
-
-  updateTaskCount();
-}
-
-
-// =========================
-// VIEW TASK
-// =========================
-
-function viewTask(task) {
-  let viewBtn = task.querySelector(".view-btn");
-
-  viewBtn.addEventListener("click", function () {
-    let taskText = task.querySelector(".task-text").textContent;
-
-    document.getElementById("modalTask").textContent = taskText;
-
-    document.getElementById("modalDetails").textContent =
-      "This task is currently active and has been added to your todo list.";
-
-    taskModal.classList.add("active");
-  });
-}
-
-
-// =========================
-// EDIT TASK
-// =========================
-
-function editTask(task) {
-  let editBtn = task.querySelector(".edit-btn");
-
-  editBtn.addEventListener("click", function () {
-    let taskText = task.querySelector(".task-text");
-
-    let newTask = prompt("Edit your task:", taskText.textContent);
-
-    if (newTask !== null && newTask.trim() !== "") {
-      taskText.textContent = newTask.trim();
-    }
-  });
-}
-
-
-// =========================
-// COMPLETE TASK
-// =========================
-
-function markTaskAsCompleted(task) {
-  let completeBtn = task.querySelector(".complete-btn");
-
-  completeBtn.addEventListener("click", function () {
-    task.classList.toggle("completed");
-
-    if (task.classList.contains("completed")) {
-      completeBtn.textContent = "Completed";
-    } else {
-      completeBtn.textContent = "Complete";
-    }
-  });
-}
-
-
-// =========================
-// DELETE TASK
-// =========================
-
-function deleteTask(task) {
-  let deleteBtn = task.querySelector(".delete-btn");
-
-  deleteBtn.addEventListener("click", function () {
-    task.remove();
+    taskInput.value = "";
 
     updateTaskCount();
-  });
 }
 
+function viewTask(task) {
 
-// =========================
-// UPDATE TASK COUNT
-// =========================
+    let viewBtn = task.querySelector(".view-btn");
+
+    viewBtn.addEventListener("click", function () {
+
+        let taskText = task.querySelector(".task-text").textContent;
+
+        document.getElementById("modalTask").textContent = taskText;
+
+        document.getElementById("modalDetails").textContent =
+            "This task is currently active and has been added to your todo list.";
+
+        taskModal.classList.add("active");
+    });
+}
+
+function editTaskFunction(task) {
+
+    let editBtn = task.querySelector(".edit-btn");
+
+    editBtn.addEventListener("click", function () {
+
+        taskInput.value =
+            task.querySelector(".task-text").textContent;
+
+        editTask = task;
+
+        addBtn.textContent = "Update Task";
+
+        taskInput.focus();
+    });
+}
+
+function markTaskAsCompleted(task) {
+
+    let completeBtn = task.querySelector(".complete-btn");
+
+    completeBtn.addEventListener("click", function () {
+
+        task.classList.toggle("completed");
+
+        if (task.classList.contains("completed")) {
+            completeBtn.textContent = "Completed";
+        } else {
+            completeBtn.textContent = "Complete";
+        }
+    });
+}
+
+function deleteTask(task) {
+
+    let deleteBtn = task.querySelector(".delete-btn");
+
+    deleteBtn.addEventListener("click", function () {
+
+        task.remove();
+
+        updateTaskCount();
+    });
+}
 
 function updateTaskCount() {
-  let totalTasks = taskList.children.length;
 
-  taskCount.textContent = totalTasks + " Tasks";
+    let totalTasks = taskList.children.length;
+
+    taskCount.textContent = totalTasks + " Tasks";
 }
-
-
-// =========================
-// SEARCH TASK
-// =========================
 
 function searchTasks() {
-  let searchValue = searchInput.value.toLowerCase().trim();
 
-  let tasks = taskList.querySelectorAll(".task-item");
+    let searchValue = searchInput.value.toLowerCase();
 
-  tasks.forEach(function (task) {
-    let taskText = task
-      .querySelector(".task-text")
-      .textContent
-      .toLowerCase();
+    let tasks = taskList.children;
 
-    if (taskText.includes(searchValue)) {
-      task.style.display = "flex";
-    } else {
-      task.style.display = "none";
+    for (let i = 0; i < tasks.length; i++) {
+
+        let taskText = tasks[i]
+            .querySelector(".task-text")
+            .textContent
+            .toLowerCase();
+
+        if (taskText.includes(searchValue)) {
+            tasks[i].style.display = "flex";
+        } else {
+            tasks[i].style.display = "none";
+        }
     }
-  });
 }
-
-
-// =========================
-// ADD TASK BUTTON
-// =========================
 
 addBtn.addEventListener("click", addTask);
 
-
-// =========================
-// ENTER KEY TO ADD TASK
-// =========================
-
-taskInput.addEventListener("keydown", function (event) {
-  if (event.key === "Enter") {
-    addTask();
-  }
-});
-
-
-// =========================
-// SEARCH INPUT
-// =========================
-
 searchInput.addEventListener("input", searchTasks);
 
+taskInput.addEventListener("keydown", function (event) {
 
-// =========================
-// CLOSE MODAL
-// =========================
-
-closeModal.addEventListener("click", function () {
-  taskModal.classList.remove("active");
+    if (event.key === "Enter") {
+        addTask();
+    }
 });
 
+closeModal.addEventListener("click", function () {
 
-// =========================
-// CLOSE MODAL ON OUTSIDE CLICK
-// =========================
+    taskModal.classList.remove("active");
+});
 
 taskModal.addEventListener("click", function (event) {
-  if (event.target === taskModal) {
-    taskModal.classList.remove("active");
-  }
+
+    if (event.target === taskModal) {
+        taskModal.classList.remove("active");
+    }
 });
