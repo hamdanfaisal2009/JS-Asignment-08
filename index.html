@@ -75,29 +75,30 @@
 
     </div>
 
+<div class="search-modal" id="searchModal">
 
-    <div class="search-modal" id="searchModal">
+    <div class="search-modal-box">
 
-        <div class="search-modal-box">
+        <button class="search-close-btn" id="searchCloseBtn">
+            <svg viewBox="0 0 24 24">
+                <path d="M6 6l12 12M18 6L6 18"></path>
+            </svg>
+        </button>
 
-            <button class="search-close-btn" id="searchCloseBtn">
-                <svg viewBox="0 0 24 24">
-                    <path d="M6 6l12 12M18 6L6 18"></path>
-                </svg>
-            </button>
+        <p>SEARCH TASKS</p>
+        <h2>Find Your Task</h2>
 
-            <p>SEARCH TASKS</p>
-            <h2>Find Your Task</h2>
+        <input
+            type="text"
+            id="searchInput"
+            placeholder="Search your task..."
+        >
 
-            <input
-                type="text"
-                id="searchInput"
-                placeholder="Search your task..."
-            >
-
-        </div>
+        <div id="searchResults" class="search-results"></div>
 
     </div>
+
+</div>
 
 
     <script src="app.js"></script>
