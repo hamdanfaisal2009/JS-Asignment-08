@@ -13,19 +13,26 @@ let closeModal = document.getElementById("closeModal");
 
 let editTask = null;
 
+
 function addTask() {
 
-    if (taskInput.value.trim() === "") {
+    let taskValue = taskInput.value.trim();
+
+    if (taskValue === "") {
         return;
     }
 
     if (editTask !== null) {
 
-        editTask.querySelector(".task-text").textContent = taskInput.value;
+        editTask.querySelector(".task-text").textContent = taskValue;
 
         editTask = null;
-        addBtn.textContent = "Add Task";
+
+        addBtn.querySelector("span").textContent = "Add Task";
+
         taskInput.value = "";
+
+        searchTasks();
 
         return;
     }
@@ -35,7 +42,7 @@ function addTask() {
     li.classList.add("task-item");
 
     li.innerHTML = `
-        <span class="task-text">${taskInput.value}</span>
+        <span class="task-text">${taskValue}</span>
 
         <div class="task-actions">
             <button class="view-btn">View</button>
@@ -55,7 +62,10 @@ function addTask() {
     taskInput.value = "";
 
     updateTaskCount();
+
+    searchTasks();
 }
+
 
 function viewTask(task) {
 
@@ -67,12 +77,18 @@ function viewTask(task) {
 
         document.getElementById("modalTask").textContent = taskText;
 
-        document.getElementById("modalDetails").textContent =
-            "This task is currently active and has been added to your todo list.";
+        if (task.classList.contains("completed")) {
+            document.getElementById("modalDetails").textContent =
+                "This task has been completed.";
+        } else {
+            document.getElementById("modalDetails").textContent =
+                "This task is currently active and has been added to your todo list.";
+        }
 
         taskModal.classList.add("active");
     });
 }
+
 
 function editTaskFunction(task) {
 
@@ -80,16 +96,16 @@ function editTaskFunction(task) {
 
     editBtn.addEventListener("click", function () {
 
-        taskInput.value =
-            task.querySelector(".task-text").textContent;
+        taskInput.value = task.querySelector(".task-text").textContent;
 
         editTask = task;
 
-        addBtn.textContent = "Update Task";
+        addBtn.querySelector("span").textContent = "Update Task";
 
         taskInput.focus();
     });
 }
+
 
 function markTaskAsCompleted(task) {
 
@@ -107,17 +123,27 @@ function markTaskAsCompleted(task) {
     });
 }
 
+
 function deleteTask(task) {
 
     let deleteBtn = task.querySelector(".delete-btn");
 
     deleteBtn.addEventListener("click", function () {
 
+        if (editTask === task) {
+            editTask = null;
+            taskInput.value = "";
+            addBtn.querySelector("span").textContent = "Add Task";
+        }
+
         task.remove();
 
         updateTaskCount();
+
+        searchTasks();
     });
 }
+
 
 function updateTaskCount() {
 
@@ -126,9 +152,10 @@ function updateTaskCount() {
     taskCount.textContent = totalTasks + " Tasks";
 }
 
+
 function searchTasks() {
 
-    let searchValue = searchInput.value.toLowerCase();
+    let searchValue = searchInput.value.toLowerCase().trim();
 
     let tasks = taskList.children;
 
@@ -147,7 +174,9 @@ function searchTasks() {
     }
 }
 
+
 addBtn.addEventListener("click", addTask);
+
 
 taskInput.addEventListener("keydown", function (event) {
 
@@ -156,40 +185,51 @@ taskInput.addEventListener("keydown", function (event) {
     }
 });
 
+
 searchBtn.addEventListener("click", function () {
 
     searchModal.classList.add("active");
 
+    searchInput.value = "";
+
+    searchTasks();
+
     searchInput.focus();
 });
 
-searchInput.addEventListener("input", searchTasks);
 
-searchCloseBtn.addEventListener("click", function () {
+searchInput.addEventListener("input", function () {
+
+    searchTasks();
+});
+
+
+function closeSearch() {
 
     searchModal.classList.remove("active");
 
     searchInput.value = "";
 
     searchTasks();
-});
+}
+
+
+searchCloseBtn.addEventListener("click", closeSearch);
+
 
 searchModal.addEventListener("click", function (event) {
 
     if (event.target === searchModal) {
-
-        searchModal.classList.remove("active");
-
-        searchInput.value = "";
-
-        searchTasks();
+        closeSearch();
     }
 });
+
 
 closeModal.addEventListener("click", function () {
 
     taskModal.classList.remove("active");
 });
+
 
 taskModal.addEventListener("click", function (event) {
 
