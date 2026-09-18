@@ -1,75 +1,88 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Todo List</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo List</title>
+    <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
-  <input type="text" id="searchInput" placeholder="Search tasks...">
+    <main class="todo-container">
 
-  <main class="todo-container">
+        <section class="todo-header">
+            <p>PERSONAL TASK MANAGER</p>
+            <h1>My Todo List</h1>
+            <span>Organize your tasks and stay productive.</span>
+        </section>
 
-    <section class="todo-header">
-      <p>PERSONAL TASK MANAGER</p>
-      <h1>My Todo List</h1>
-      <span>Organize your tasks and stay productive.</span>
-    </section>
+        <section class="add-section">
 
-    <section class="add-section">
-      <input type="text" id="taskInput" placeholder="Enter your task">
+            <input type="text" id="taskInput" placeholder="Enter your task">
 
-      <button id="addBtn">
-        <svg viewBox="0 0 24 24">
-          <path d="M12 5v14M5 12h14" />
-        </svg>
-        Add Task
-      </button>
-    </section>
+            <button id="addBtn">
+                <svg viewBox="0 0 24 24">
+                    <path d="M12 5v14M5 12h14"/>
+                </svg>
+                Add Task
+            </button>
 
-    <section class="tasks-section">
-      <div class="section-heading">
-        <h2>Tasks</h2>
-        <span id="taskCount">0 Tasks</span>
-      </div>
+        </section>
 
-      <ul id="taskList"></ul>
-    </section>
+        <section class="search-section">
 
-  </main>
-   
-  <div class="modal" id="taskModal">
+            <input
+                type="text"
+                id="searchInput"
+                placeholder="Search your tasks..."
+            >
 
-    <div class="modal-box">
+        </section>
 
-      <button class="close-btn" id="closeModal">
-        <svg viewBox="0 0 24 24">
-          <path d="M6 6l12 12M18 6L6 18" />
-        </svg>
-      </button>
+        <section class="tasks-section">
 
-      <div class="modal-left">
-        <p>TASK</p>
-        <h2 id="modalTask">Task Name</h2>
-      </div>
+            <div class="section-heading">
+                <h2>Tasks</h2>
+                <span id="taskCount">0 Tasks</span>
+            </div>
 
-      <div class="modal-right">
-        <p>DETAILS</p>
-        <h3>Task Information</h3>
-        <span id="modalDetails">
-          This task is currently active.
-        </span>
-      </div>
+            <ul id="taskList"></ul>
+
+        </section>
+
+    </main>
+
+
+    <div class="modal" id="taskModal">
+
+        <div class="modal-box">
+
+            <button class="close-btn" id="closeModal">
+                <svg viewBox="0 0 24 24">
+                    <path d="M6 6l12 12M18 6L6 18"/>
+                </svg>
+            </button>
+
+            <div class="modal-left">
+                <p>TASK</p>
+                <h2 id="modalTask">Task Name</h2>
+            </div>
+
+            <div class="modal-right">
+                <p>DETAILS</p>
+                <h3>Task Information</h3>
+
+                <span id="modalDetails">
+                    This task is currently active.
+                </span>
+            </div>
+
+        </div>
 
     </div>
 
-  </div>
 
-  <script src="app.js"></script>
+    <script src="script.js"></script>
+
 </body>
-
 </html>
